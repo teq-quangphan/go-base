@@ -1,6 +1,11 @@
 package conf
 
-var config *Config
+import (
+	"github.com/caarlos0/env/v8"
+	"log"
+)
+
+var config Config
 
 type Config struct {
 	Port        string `envconfig:"PORT"`
@@ -8,14 +13,15 @@ type Config struct {
 	ServiceHost string `envconfig:"SERVICE_HOST"`
 
 	MySQL struct {
-		Host           string `envconfig:"DB_HOST"`
-		Port           string `envconfig:"DB_PORT"`
-		User           string `envconfig:"DB_USER"`
-		Pass           string `envconfig:"DB_PASS"`
-		DBName         string `envconfig:"DB_NAME"`
-		DBMaxIdleConns int    `envconfig:"DB_MAX_IDLE_CONNS"`
-		DBMaxOpenConns int    `envconfig:"DB_MAX_OPEN_CONNS"`
-		CountRetryTx   int    `envconfig:"DB_TX_RETRY_COUNT"`
+		DBHost    string `env:"DB_HOST" envDefault:"localhost"`
+		DBPort    string `env:"DB_PORT" envDefault:"5432"`
+		DBUser    string `env:"DB_USER" envDefault:"postgres"`
+		DBPass    string `env:"DB_PASS" envDefault:"1"`
+		DBName    string `env:"DB_NAME" envDefault:"postgres"`
+		EnableDB  string `env:"ENABLE_DB" envDefault:"true"`
+		DBMaxIdleConns int    `env:"DB_MAX_IDLE_CONNS"`
+		DBMaxOpenConns int    `env:"DB_MAX_OPEN_CONNS"`
+		CountRetryTx   int    `env:"DB_TX_RETRY_COUNT"`
 	}
 
 	HealthCheck struct {
@@ -42,5 +48,12 @@ type Config struct {
 }
 
 func GetConfig() *Config {
-	return config
+	return &config
+}
+
+func SetEnv() {
+	err := env.Parse(&config)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
