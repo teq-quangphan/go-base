@@ -3,12 +3,23 @@ package user
 import (
 	"github.com/labstack/echo/v4"
 	"go-base/model"
+	"net/http"
 )
 
 func (r *Route) Create(c echo.Context) error {
-	if c != nil {
-		var user model.User
-		_ = r.useCase.UserUseCase.Create(user)
+	user := &model.User{}
+
+	if err := c.Bind(&user); err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
-	return nil
+	//if err := c.Validate(user); err != nil {
+	//	return c.JSON(http.StatusCreated, err.Error())
+	//}
+
+	newUser, err := r.useCase.UserUseCase.Create(*user)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+
+	return c.JSON(http.StatusCreated, newUser)
 }

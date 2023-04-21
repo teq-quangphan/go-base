@@ -9,7 +9,7 @@ services:
     ports:
       - 3320:3306
     volumes:
-      - mysql:/var/lib/mysql
+      - user:/var/lib/user
     command:
       [
         "mysqld",
