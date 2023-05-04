@@ -1,9 +1,8 @@
 package healthcheck
 
 import (
-	"net/http"
-
 	"github.com/labstack/echo/v4"
+	"net/http"
 )
 
 func Init(group *echo.Group) {
