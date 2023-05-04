@@ -5,7 +5,6 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 	"go-base/delivery/http/healthcheck"
 	userHandler "go-base/delivery/http/user"
-	middlewarecustom "go-base/middleware"
 	"go-base/usecase"
 	"net/http"
 )
@@ -33,7 +32,7 @@ func NewHTTPHandler(useCase *usecase.UseCase) *echo.Echo {
 	}))
 
 	// Health check use for microservice
-	healthcheck.Init(e.Group("/health-check", middlewarecustom.VerifyToken))
+	healthcheck.Init(e.Group("/health-check"))
 
 	// API docs
 	//if !config.GetConfig().Stage.IsProd() {
