@@ -1,16 +1,16 @@
 package repository
 
 import (
-	"go-base/repository/mysql"
+	"go-base/repository/user"
 	"gorm.io/gorm"
 )
 
 type Repository struct {
-	RepoMysql mysql.IRepoMysql
+	RepoUser user.IRepoUser
 }
 
 func New(db *gorm.DB) *Repository {
 	return &Repository{
-		RepoMysql: mysql.NewRepoMysql(db),
+		RepoUser: user.NewRepo(db),
 	}
 }

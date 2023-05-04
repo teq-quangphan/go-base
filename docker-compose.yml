@@ -1,7 +1,23 @@
 version: "3"
 services:
-  teq:
-    container_name: go-base-db
+  main:
+    container_name: go-base-service
+    depends_on:
+      db:
+        condition: service_healthy
+    build: .
+    ports:
+      - 8088:8088
+    environment:
+      - DB_HOST=${DB_HOST:-host.docker.internal}
+      - DB_PORT=${DB_PORT:-3320}
+      - DB_USER=${DB_USER:-root}
+      - DB_NAME=${DB_NAME:-db-demo}
+      - DB_PASS=${DB_PASS:-root}
+    networks:
+      - mynet
+  db:
+    container_name: db
     image: mysql:latest
     environment:
       MYSQL_DATABASE: db-demo
@@ -9,7 +25,29 @@ services:
     ports:
       - 3320:3306
     volumes:
-      - mysql:/var/lib/mysql
+      - mysql:/var/lib/user
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    command:
+      [
+        "mysqld",
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_unicode_ci",
+        "--default-authentication-plugin=mysql_native_password"
+      ]
+  db-test:
+    container_name: db-test
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: db-demo-test
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3322:3306
+    volumes:
+      - go-base-test:/var/lib/user
     command:
       [
         "mysqld",
@@ -20,3 +58,7 @@ services:
 
 volumes:
   mysql:
+  go-base-test:
+networks:
+  mynet:
+    driver: bridge

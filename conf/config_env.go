@@ -13,15 +13,21 @@ type Config struct {
 	ServiceHost string `envconfig:"SERVICE_HOST"`
 
 	MySQL struct {
-		DBHost    string `env:"DB_HOST" envDefault:"localhost"`
-		DBPort    string `env:"DB_PORT" envDefault:"5432"`
-		DBUser    string `env:"DB_USER" envDefault:"postgres"`
-		DBPass    string `env:"DB_PASS" envDefault:"1"`
-		DBName    string `env:"DB_NAME" envDefault:"postgres"`
-		EnableDB  string `env:"ENABLE_DB" envDefault:"true"`
+		DBHost         string `env:"DB_HOST" envDefault:"localhost"`
+		DBPort         string `env:"DB_PORT" envDefault:"5432"`
+		DBUser         string `env:"DB_USER" envDefault:"mysql"`
+		DBPass         string `env:"DB_PASS" envDefault:"1"`
+		DBName         string `env:"DB_NAME" envDefault:"mysql"`
+		EnableDB       string `env:"ENABLE_DB" envDefault:"true"`
 		DBMaxIdleConns int    `env:"DB_MAX_IDLE_CONNS"`
 		DBMaxOpenConns int    `env:"DB_MAX_OPEN_CONNS"`
 		CountRetryTx   int    `env:"DB_TX_RETRY_COUNT"`
+
+		DBTestHost string `env:"DB_TEST_HOST" envDefault:"localhost"`
+		DBTestPort string `env:"DB_TEST_PORT" envDefault:"3306"`
+		DBTestUser string `env:"DB_TEST_USER" envDefault:"test"`
+		DBTestPass string `env:"DB_TEST_PASS" envDefault:"1"`
+		DBTestName string `env:"DB_TEST_NAME" envDefault:"test"`
 	}
 
 	HealthCheck struct {
