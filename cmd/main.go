@@ -31,6 +31,7 @@ func main() {
 
 	confMysql := conf.GetConfig().MySQL
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local&multiStatements=true", confMysql.DBUser, confMysql.DBPass, confMysql.DBHost, confMysql.DBPort, confMysql.DBName)
+	log.Println(dsn)
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal(err)
@@ -46,7 +47,7 @@ func main() {
 	//	h.Listener = httpL
 	//	errs <- h.Start("")
 	//}()
-	if err := h.Start("localhost:8088"); err != http.ErrServerClosed {
+	if err := h.Start("0.0.0.0:8088"); err != http.ErrServerClosed {
 		log.Fatal(err)
 	}
 }

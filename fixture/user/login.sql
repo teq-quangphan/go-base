@@ -1,0 +1,1 @@
+INSERT INTO `users`(`id`, `user_name`, `password`, `email`) values (1, "quangpn", "$2a$14$R6cx9V.8aLiBo3bx2.yaZex6jSQTrDQW8REZUg1GexYfDXqI3pT86", "quang@gmail.com");
