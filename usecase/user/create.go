@@ -30,5 +30,10 @@ func (uc *UserUseCase) Create(user model.User) (*model.User, error) {
 	if err := uc.repo.CreateUser(&user); err != nil {
 		return nil, err
 	}
+	gender := 0
+	if user.Gender == "female" {
+		gender = 1
+	}
+	user.ID = int(util.ShardingHashKey(user.ID, gender))
 	return &user, nil
 }
