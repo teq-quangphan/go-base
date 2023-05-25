@@ -5,7 +5,6 @@ import (
 	"github.com/labstack/echo/v4"
 	"go-base/model"
 	"go-base/util"
-	"gorm.io/gorm"
 	"net/http"
 	"strconv"
 )
@@ -19,13 +18,14 @@ func (uc *UserUseCase) Login(ctx echo.Context, req model.LoginReq) (*util.Respon
 	)
 
 	//get user
-	user, err = uc.GetOneByEmail(req.Email)
-	if err != nil {
-		if err == gorm.ErrRecordNotFound {
-			return nil, ctx.JSON(http.StatusBadRequest, err.Error())
-		}
-		return nil, ctx.JSON(http.StatusInternalServerError, err.Error())
-	}
+	//user, err = uc.GetOneByEmail(req.Email)
+	//if err != nil {
+	//	if err == gorm.ErrRecordNotFound {
+	//		return nil, ctx.JSON(http.StatusBadRequest, err.Error())
+	//	}
+	//	return nil, ctx.JSON(http.StatusInternalServerError, err.Error())
+	//}
+
 	// check password
 	match := util.CheckPasswordHash(req.Password, user.Password)
 	if !match {
@@ -64,5 +64,4 @@ func (uc *UserUseCase) Login(ctx echo.Context, req model.LoginReq) (*util.Respon
 	}
 
 	return res, nil
-
 }

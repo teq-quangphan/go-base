@@ -14,6 +14,7 @@ type UserUseCase struct {
 type IUserUseCase interface {
 	Create(user model.User) (*model.User, error)
 	GetOneByEmail(email string) (*model.User, error)
+	GetOneUser(id int) (*model.User, error)
 	Login(ctx echo.Context, req model.LoginReq) (*util.Response, error)
 }
 

@@ -5,6 +5,7 @@ type User struct {
 	UserName string `json:"user_name" validate:"required" gorm:"not null"`
 	Password string `json:"password" validate:"required" gorm:"not null"`
 	Email    string `json:"email" validate:"required,email"`
+	Gender   string `json:"gender"`
 }
 
 type LoginReq struct {
