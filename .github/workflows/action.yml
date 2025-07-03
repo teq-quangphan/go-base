@@ -10,3 +10,5 @@ jobs:
     steps:
       - name: Print greeting
         run: echo "🚀 Hello, World from GitHub Actions!"
+      - name: call API
+        run: curl http://10.0.20.171:3000
