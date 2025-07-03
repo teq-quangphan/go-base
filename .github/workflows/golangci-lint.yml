@@ -4,7 +4,6 @@ on:
     tags:
       - v*
     branches:
-      - master
       - main
   pull_request:
 permissions:
@@ -14,7 +13,7 @@ permissions:
 jobs:
   golangci:
     name: lint
-    runs-on: ubuntu-latest
+    runs-on: codebuild-test-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - uses: actions/setup-go@v4
         with:
