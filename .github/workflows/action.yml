@@ -1,0 +1,14 @@
+name: Hello World
+
+on:
+  push:
+    tags:
+      - 'test*'
+env:
+  CODEBUILD_PROJECT_NAME: "test"
+jobs:
+  say-hello:
+    runs-on: codebuild-${{env.CODEBUILD_PROJECT_NAME}}-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: Print greeting
+        run: echo "🚀 Hello, World from GitHub Actions!"
