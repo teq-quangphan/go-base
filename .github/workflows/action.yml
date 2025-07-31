@@ -1,14 +1,15 @@
 name: Hello World
 
 on:
-  push:
-    tags:
-      - 'test*'
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "app's name"
+        required: true
+        type: string
 jobs:
   say-hello:
     runs-on: codebuild-quang-test-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - name: Print greeting
-        run: echo "🚀 Hello, World from GitHub Actions!"
-      - name: call API
-        run: curl http://10.0.20.171:3000
+        run: echo "🚀 Hello, World ${{ inputs.base_url_app }} from GitHub Actions!"
