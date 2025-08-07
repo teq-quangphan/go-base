@@ -10,6 +10,12 @@ on:
 jobs:
   say-hello:
     runs-on: codebuild-quang-test-${{ github.run_id }}-${{ github.run_attempt }}
+    container: mcr.microsoft.com/playwright:v1.52.0-jammy
+    
     steps:
+      - name: Run Playwright Tests
+        run: |
+          echo "RUN test"
+          npx playwright test ${{ inputs.feature }}
       - name: Print greeting
         run: echo "🚀 Hello, World ${{ inputs.base_url_app }} from GitHub Actions!"
